@@ -78,6 +78,7 @@ class BotAgent:
     # Guard: If order cancelled move onto next Pair
     if order_status == "CANCELED":
       print(f"{self.market_1} vs {self.market_2} - Order cancelled...")
+      send_message(f"{self.market_1} vs {self.market_2} - Order cancelled...")
       self.order_dict["pair_status"] = "FAILED"
       return "failed"
 
@@ -89,6 +90,7 @@ class BotAgent:
       # Guard: If order cancelled move onto next Pair
       if order_status == "CANCELED":
         print(f"{self.market_1} vs {self.market_2} - Order cancelled...")
+        send_message(f"{self.market_1} vs {self.market_2} - Order cancelled...")
         self.order_dict["pair_status"] = "FAILED"
         return "failed"
 
@@ -97,6 +99,7 @@ class BotAgent:
         self.client.private.cancel_order(order_id=order_id)
         self.order_dict["pair_status"] = "ERROR"
         print(f"{self.market_1} vs {self.market_2} - Order error...")
+        send_message(f"{self.market_1} vs {self.market_2} - Order error...")
         return "error"
 
     # Return live
@@ -130,6 +133,7 @@ class BotAgent:
     except Exception as e:
       self.order_dict["pair_status"] = "ERROR"
       self.order_dict["comments"] = f"Market 1 {self.market_1}: , {e}"
+      send_message(f"Market 1 {self.market_1}: , {e}")
       return self.order_dict
 
     # Ensure order is live before processing
@@ -166,6 +170,7 @@ class BotAgent:
     except Exception as e:
       self.order_dict["pair_status"] = "ERROR"
       self.order_dict["comments"] = f"Market 2 {self.market_2}: , {e}"
+      send_message(f"Market 2 {self.market_2}: , {e}")
       return self.order_dict
 
     # Ensure order is live before processing
